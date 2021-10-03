@@ -1,0 +1,11 @@
+{
+  "name": "dev-twitter-art-gallery",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/marushosummers/dev-twitter-art-gallery",
+  "author": "marusho",
+  "license": "MIT",
+  "dependencies": {
+    "create-react-app": "^4.0.3"
+  }
+}
