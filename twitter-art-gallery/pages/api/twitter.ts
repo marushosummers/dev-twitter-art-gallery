@@ -5,7 +5,7 @@ const token = process.env.APP_USER_TOKEN ?? "";
 const client = new TwitterApi(token);
 
 const image = async () => {
-  const params = { screen_name: "marushosummers", count: 1 };
+  const params = { screen_name: "marusho_summers", count: 1 };
   await client
     .get("favorites/list", params)
     .then((tweet) => {
