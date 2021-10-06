@@ -105,7 +105,7 @@ class MainTable extends React.Component<{}, typeImageTableState> {
 export default MainTable;
 
 function twitterAPI(screen_name: string, max_id: string) {
-    let endpoint = `http://localhost:3000/api/twitter?name=${screen_name}&max_id=${max_id}`
+    let endpoint = `https://dev-twitter-art-gallery.vercel.app/api/twitter?name=${screen_name}&max_id=${max_id}`
     return new Promise((resolve, reject) => {
         axios.get(endpoint)
             .then((res) => {
