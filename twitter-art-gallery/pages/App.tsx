@@ -1,4 +1,4 @@
-import MainTable from "./components/MainTable";
+import MainTable from "../components/MainTable";
 
 function App() {
   return (
