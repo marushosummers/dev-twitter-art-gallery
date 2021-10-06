@@ -43,7 +43,7 @@ class MainTable extends React.Component<{}, typeImageTableState> {
 
     getiine = (screen_name: string) => {
         twitterAPI(screen_name, this.state.images.max_id)
-            .then((res) => {
+            .then((res: any) => {
                 this.setIineImages(res.body);
             })
             .catch(() => {
