@@ -9,7 +9,7 @@ const client = twitterClient.readOnly;
 const getFavolite = async (request: NextApiRequest, response: NextApiResponse) => {
   const params = { name: request.query.name };
   const result = await getFavoliteTweets(params)
-  console.log(result)
+  console.log(result);
 
   response.json({
     statusCode: 200,
@@ -18,7 +18,7 @@ const getFavolite = async (request: NextApiRequest, response: NextApiResponse) =
       "Access-Control-Allow-Headers": "Content-Type",
       "Access-Control-Allow-Methods": "OPTIONS,GET",
     },
-    body: JSON.stringify(result),
+    body: result,
   })
 };
 
@@ -44,7 +44,7 @@ const extractImages = (tweets: any) => {
       }
     }
   });
-  const max_id = tweets[tweets.length - 1].id - 10000;
+  const max_id = tweets[tweets.length-1].id - 10000;
   images.max_id = max_id;
   return images;
 };
