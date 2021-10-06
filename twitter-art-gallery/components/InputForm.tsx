@@ -32,10 +32,7 @@ class InputForm extends React.Component<typeInputFornProps, typeInputFormState> 
                 <form onSubmit={this.handleSubmit}>
                     <div className="flex justify-center mb-5 mx-5">
                         <p className="md-5">
-                            twitterのスクリーンネームを入力してください（例：@hukurouo）
-                            <br />
-                            <br />
-                            その人がいいねした画像が良い感じに表示されます。
+                            Input your twitter id
                         </p>
                     </div>
                     <div className="flex mb-5 mx-auto max-w-xs">
@@ -56,7 +53,7 @@ class InputForm extends React.Component<typeInputFornProps, typeInputFormState> 
                     <div className="flex justify-center mb-5 mx-5">
                         <input
                             type="submit"
-                            value="取得"
+                            value="Get"
                             disabled={this.state.screen_name === ""}
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 mx-2 rounded w-20 mb-10"
                         />

@@ -7,9 +7,9 @@ const twitterClient = new TwitterApi(token);
 const client = twitterClient.readOnly;
 
 const getFavolite = async (request: NextApiRequest, response: NextApiResponse) => {
-  const params = { name: request.query.name };
+  const params = { name: request.query.name, max_id: request.query.max_id };
+  console.log(params);
   const result = await getFavoliteTweets(params)
-  console.log(result);
 
   response.json({
     statusCode: 200,
@@ -22,9 +22,12 @@ const getFavolite = async (request: NextApiRequest, response: NextApiResponse) =
   })
 };
 
-const getFavoliteTweets = async (params: { name: string | string[], }) => {
-  if (typeof params.name === "string") {
-    const likedTweets = await client.v1.get('favorites/list.json', { screen_name: params.name })
+const getFavoliteTweets = async (params: { name: string | string[], max_id: string | string[]}) => {
+  if (typeof params.name === "string" && params.max_id) {
+    const likedTweets = await client.v1.get('favorites/list.json', { screen_name: params.name, max_id: params.max_id, count: 100});
+    return extractImages(likedTweets)
+  } else if (typeof params.name === "string") {
+    const likedTweets = await client.v1.get('favorites/list.json', { screen_name: params.name, count: 100 });
     return extractImages(likedTweets)
   }
 };
