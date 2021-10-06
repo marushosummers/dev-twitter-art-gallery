@@ -29,7 +29,7 @@ const getFavoliteTweets = async (params: { name: string | string[], }) => {
   }
 };
 
-const extractImages = function (tweets: any) {
+const extractImages = (tweets: any) => {
   var images = { url: [], source: [], height: [], max_id: 0 };
   tweets.forEach((tweet) => {
     if (tweet.entities.media) {
