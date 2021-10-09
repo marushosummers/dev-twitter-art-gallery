@@ -46,7 +46,7 @@ class ImageTable extends React.Component<typeImageTableProps, typeImageTableStat
                 {createRaneItems(this.state.raneNum, this.props.images).map((items: typeRaneItems[], index: number) => {
                     return (
                         <div key={index}>
-                            <ImageList raneItems={items} />
+                            <ImageList imageItems={items} />
                         </div>
                     );
                 })}
