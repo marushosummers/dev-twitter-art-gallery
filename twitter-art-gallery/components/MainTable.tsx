@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import InputForm from "./InputForm";
-import ImageTable from './ImageTable'
+import ImageList from './ImageList'
 
 type typeImageTableState = {
     screen_name: string;
@@ -10,20 +10,25 @@ type typeImageTableState = {
 };
 
 type typeImages = {
-    url: string[];
-    height: number[];
-    source: string[];
+    images: ImageItem[];
     max_id: string;
 };
+
+export type ImageItem = {
+    url: string;
+    source: string;
+};
+
+export interface ImageListProps {
+    imageItems: ImageItem[];
+}
 
 class MainTable extends React.Component<{}, typeImageTableState> {
     constructor(props: {}) {
         super(props);
         this.state = {
             images: {
-                url: [],
-                height: [],
-                source: [],
+                images: [],
                 max_id: "",
             },
             message: "",
@@ -33,7 +38,7 @@ class MainTable extends React.Component<{}, typeImageTableState> {
 
     handleSubmit = (screen_name: string) => {
         if (screen_name !== this.state.screen_name) {
-            this.setState({ images: { url: [], height: [], source: [], max_id: "" } })
+            this.setState({ images: { images:[], max_id: "" } })
         }
         this.setState({ screen_name: screen_name, message: "loading..." })
         setTimeout(() => {
@@ -44,7 +49,10 @@ class MainTable extends React.Component<{}, typeImageTableState> {
     getiine = (screen_name: string) => {
         twitterAPI(screen_name, this.state.images.max_id)
             .then((res: any) => {
-                this.setIineImages(res.body);
+                console.log(res.body)
+                const result = this.packing(res.body)
+                console.log(result)
+                this.setIineImages(result)
             })
             .catch(() => {
                 this.setState({
@@ -56,9 +64,7 @@ class MainTable extends React.Component<{}, typeImageTableState> {
     setIineImages = (results: any) => {
         this.setState({
             images: {
-                url: this.state.images.url.concat(results.url),
-                height: this.state.images.height.concat(results.height),
-                source: this.state.images.source.concat(results.source),
+                images: this.state.images.images.concat(results.images),
                 max_id: String(results.max_id)
             }
         })
@@ -94,7 +100,7 @@ class MainTable extends React.Component<{}, typeImageTableState> {
         return (
             <div>
                 <InputForm screen_name={""} onSubmit={(screen_name: string) => this.handleSubmit(screen_name)} />
-                <ImageTable images={this.state.images} />
+                <ImageList imageItems={this.state.images.images} />
                 <div className="box h-64 text-center m-5 p-4 ...">
                     {this.state.message}
                 </div>
@@ -109,7 +115,7 @@ function twitterAPI(screen_name: string, max_id: string) {
     console.log(endpoint)
     return new Promise((resolve, reject) => {
         axios.get(endpoint)
-            .then((res) => {
+            .then((res: any) => {
                 resolve(res.data);
             })
             .catch((err) => {
@@ -117,4 +123,25 @@ function twitterAPI(screen_name: string, max_id: string) {
                 reject(err);
             });
     });
+}
+
+
+const packing = async (data: any) => {
+    let images = [];
+
+    for (let i = 0; i < data.length; i++) {
+        console.log(i)
+        images.push({
+            url: data.url[i],
+            source: data.source[i],
+            height: data.height[i]
+        })
+        console.log(images)
+    }
+
+    const result = {
+        images: images,
+        max_id: data.max_id
+    }
+    return result
 }

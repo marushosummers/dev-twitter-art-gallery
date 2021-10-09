@@ -1,14 +1,6 @@
 import React from "react";
 import Image from 'next/image'
-
-type ImageItem = {
-  url: string;
-  source: string;
-};
-
-interface ImageListProps {
-  imageItems: ImageItem[];
-}
+import {ImageItem, ImageListProps} from "./MainTable"
 
 const ImageList: React.FC<ImageListProps> = ({ imageItems }) => {
   return (
