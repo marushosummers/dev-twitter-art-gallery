@@ -93,7 +93,7 @@ class MainTable extends React.Component<{}, typeImageTableState> {
     render() {
         return (
             <div>
-                <InputForm onSubmit={(screen_name: string) => this.handleSubmit(screen_name)} />
+                <InputForm screen_name={""} onSubmit={(screen_name: string) => this.handleSubmit(screen_name)} />
                 <ImageTable images={this.state.images} />
                 <div className="box h-64 text-center m-5 p-4 ...">
                     {this.state.message}
