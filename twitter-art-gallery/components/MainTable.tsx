@@ -4,9 +4,9 @@ import InputForm from "./InputForm";
 import ImageTable from './ImageTable'
 
 type typeImageTableState = {
+    screen_name: string;
     images: typeImages;
     message: string;
-    screen_name: string;
 };
 
 type typeImages = {

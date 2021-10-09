@@ -1,17 +1,14 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import App from './App'
+import React from 'react';
+import Router from "next/router";
 
 const Home: NextPage = () => {
+  React.useEffect(() => {
+    Router.push("/twitter");
+  });
   return (    
-  <div>
-      <Head>
-        <title>Twitter Art Gallery</title>
-        <meta property="og:title" content="Twitter Art Gallery" key="title" />
-      </Head>
-      <App />
-    </div>
-  )
+  <div></div>
+)
 }
 
 export default Home
