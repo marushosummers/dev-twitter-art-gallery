@@ -38,6 +38,7 @@ const extractImages = (tweets: any) => {
     if (tweet.entities.media) {
       if (tweet.entities.media[0].type == "photo") {
         if (!tweet.entities.media[0].media_url_https.includes("video_thumb")) {
+          console.log(tweet.entities.media[0])
           images.url.push(tweet.entities.media[0].media_url_https);
           images.source.push(tweet.entities.media[0].expanded_url);
           const w = tweet.entities.media[0].sizes.medium.w;
