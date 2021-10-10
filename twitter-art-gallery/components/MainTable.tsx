@@ -20,7 +20,6 @@ export type ImageItem = {
 
 
 const MainTable: React.FC<MainTableProps> = (props) => {
-
   return (
     <div>
       <ImageList imageItems={props.images} />

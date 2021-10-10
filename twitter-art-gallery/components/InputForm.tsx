@@ -15,7 +15,7 @@ const InputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-        <div className="flex mb-5 mx-auto max-w-xs">
+        <div className="flex mb-5 max-w-xs">
             <div className="mt-1 relative rounded-md shadow-sm mx-5 w-11/12">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <span className="text-gray-500 sm:text-sm">@</span>
@@ -29,7 +29,7 @@ const InputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
                 />
             </div>
         </div>
-        <div className="flex justify-center mb-5 mx-5">
+        <div className="flex mb-5 mx-5">
             <input
                 type="submit"
                 value="Get"

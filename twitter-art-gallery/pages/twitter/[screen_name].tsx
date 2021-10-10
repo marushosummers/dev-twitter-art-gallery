@@ -3,7 +3,6 @@ import MainTable from "../../components/MainTable";
 import Layout from '../../components/layout'
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import InputForm from "../../components/InputForm";
 
 interface typeImages {
   images: ImageItem[];
@@ -37,16 +36,9 @@ const TwitterScreenName = () => {
 
   useEffect(() => {
     if (!router.isReady) return;
+    setScreenName(name)
     getiine(name)
-  }, [router.isReady])
-
-  const handleSubmit = (name: string) => {
-    if (name !== screenName) {
-      setScreenName(name);
-      setMessage("loading...");
-      getiine(name)
-    }
-  }
+  }, [router.isReady, name])
 
   const getiine = async (name: string): Promise<void> => {
     try {
@@ -60,7 +52,7 @@ const TwitterScreenName = () => {
 
   const setIineImages = (results: any) => {
     setMaxId(results.max_id)
-    setImages(images.concat(results.images))
+    setImages(results.images)
 
     if (results.images.length === 0) {
       setMessage("いいねした画像がありませんでした");
@@ -94,7 +86,6 @@ const TwitterScreenName = () => {
           </header>
           <div className="flex justify-center" >
             <div>
-              <InputForm onSubmit={(screen_name: string) => handleSubmit(screen_name)} />
               <div className="text-center">
                 {screenName}
               </div>
