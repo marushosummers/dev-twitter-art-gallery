@@ -81,16 +81,13 @@ const TwitterScreenName = () => {
     <Layout>
       <div className="min-h-screen" >
         <div className="container mx-auto" >
-          <header className="flex justify-center items-center text-3xl h-32 mx-5" >
-            Show your favorite arts in Twitter
-          </header>
-          <div className="flex justify-center" >
-            <div>
-              <div className="text-center">
-                {screenName}
-              </div>
-              <MainTable screen_name={screenName} images={images} max_id={maxId} message={message} />
+          <div className="flex justify-center items-center text-3xl h-32 mx-5" >
+            <div className="nm-flat-gray-50 p-3 rounded-xl" >
+              @{screenName}
             </div>
+          </div>
+          <div className="flex justify-center" >
+              <MainTable screen_name={screenName} images={images} max_id={maxId} message={message} />
           </div>
         </div>
       </div>

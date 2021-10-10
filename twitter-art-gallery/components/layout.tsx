@@ -6,11 +6,11 @@ export default function Layout({ children }) {
   return (
     <>
       <Head>
-        <title>Twitter Art Gallery</title>
-        <meta property="og:title" content="Twitter Art Gallery" key="title" />
+        <title>Garoo</title>
+        <meta property="og:title" content="Garoo" key="title" />
       </Head>
       <main>
-        <div className="nm-inset-gray-50">
+        <div className="nm-flat-gray-50">
           <Header />
           {children}
         </div>

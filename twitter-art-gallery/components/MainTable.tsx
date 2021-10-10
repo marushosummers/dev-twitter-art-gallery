@@ -4,7 +4,7 @@ import ImageList from './ImageList'
 
 interface MainTableProps {
   screen_name: string;
-  images: ImageListProps;
+  images: ImageItem[];
   message: string;
   max_id: number;
 }
@@ -14,16 +14,18 @@ export interface ImageListProps {
 }
 
 export type ImageItem = {
-    url: string;
-    source: string;
+  url: string;
+  source: string;
+  height: number;
+  width: number;
 };
 
 
 const MainTable: React.FC<MainTableProps> = (props) => {
   return (
-    <div>
+    <div className="">
       <ImageList imageItems={props.images} />
-      <div className="box h-64 text-center m-5 p-4 ...">
+      <div className="box h-64 text-center m-5 p-4">
           {props.message}
       </div>
     </div>
