@@ -9,9 +9,7 @@ const Nav: React.FC<{}> = ({ }) => {
   }
 
   return (
-    <div className="">
-      <InputForm onSubmit={(screen_name: string) => handleSubmit(screen_name)} />
-    </div>
+    <InputForm onSubmit={(screen_name: string) => handleSubmit(screen_name)} />
   );
 };
 
