@@ -11,7 +11,7 @@ const TwitterPage: NextPage = () => {
             Show your favorite arts in Twitter
           </header>
           <div className="flex justify-center" >
-            <MainTable />
+            <MainTable screen_name={""} images={[]} max_id={0} message={""} />
           </div>
         </div>
       </div>
