@@ -14,16 +14,21 @@ type typeImages = {
     max_id: string;
 };
 
-export type ImageItem = {
-    url: string;
-    source: string;
-};
+interface MainTableProps {
+    screen_name?: string;
+}
 
 export interface ImageListProps {
     imageItems: ImageItem[];
 }
 
-class MainTable extends React.Component<{}, typeImageTableState> {
+export type ImageItem = {
+    url: string;
+    source: string;
+};
+
+
+class MainTable extends React.Component<MainTableProps, typeImageTableState> {
     constructor(props: {}) {
         super(props);
         this.state = {
@@ -50,9 +55,7 @@ class MainTable extends React.Component<{}, typeImageTableState> {
         twitterAPI(screen_name, this.state.images.max_id)
             .then((res: any) => {
                 console.log(res.body)
-                const result = this.packing(res.body)
-                console.log(result)
-                this.setIineImages(result)
+                this.setIineImages(res.body)
             })
             .catch(() => {
                 this.setState({
@@ -123,25 +126,4 @@ function twitterAPI(screen_name: string, max_id: string) {
                 reject(err);
             });
     });
-}
-
-
-const packing = async (data: any) => {
-    let images = [];
-
-    for (let i = 0; i < data.length; i++) {
-        console.log(i)
-        images.push({
-            url: data.url[i],
-            source: data.source[i],
-            height: data.height[i]
-        })
-        console.log(images)
-    }
-
-    const result = {
-        images: images,
-        max_id: data.max_id
-    }
-    return result
 }

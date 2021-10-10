@@ -8,7 +8,7 @@ const ImageList: React.FC<ImageListProps> = ({ imageItems }) => {
       {imageItems.map((image: ImageItem, index: number) => {
         return (
           <div key={index}>
-            <div className="m-1 max-w-xs">
+            <div className=" max-w-xs">
               <a href={image.source} target="_blank" rel="noopener noreferrer">
                 <Image src={image.url} height={600} width={300} />
               </a>
