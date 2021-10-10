@@ -1,21 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import InputForm from "./InputForm";
 import ImageList from './ImageList'
 
-type typeImageTableState = {
-    screen_name: string;
-    images: typeImages;
-    message: string;
-};
-
-type typeImages = {
+interface typeImages {
     images: ImageItem[];
     max_id: string;
 };
 
 interface MainTableProps {
-    screen_name?: string;
+  screen_name?: string;
+  images: ImageListProps;
+  message?: string;
+  max_id?: number;
 }
 
 export interface ImageListProps {
@@ -28,102 +25,83 @@ export type ImageItem = {
 };
 
 
-class MainTable extends React.Component<MainTableProps, typeImageTableState> {
-    constructor(props: {}) {
-        super(props);
-        this.state = {
-            images: {
-                images: [],
-                max_id: "",
-            },
-            message: "",
-            screen_name: "",
-        };
-    }
+const MainTable: React.FC<MainTableProps> = (props) => {
 
-    handleSubmit = (screen_name: string) => {
-        if (screen_name !== this.state.screen_name) {
-            this.setState({ images: { images:[], max_id: "" } })
+  const [images, setImages] = useState([])
+  const [screenName, setScreenName] = useState("")
+  const [message, setMessage] = useState("")
+  const [maxId, setMaxId] = useState("")
+
+    const handleSubmit = (name: string) => {
+        if (name !== screenName) {
+            setScreenName(name);
         }
-        this.setState({ screen_name: screen_name, message: "loading..." })
-        setTimeout(() => {
-            this.getiine(screen_name)
-        }, 500)
+        setMessage("loading...");
+        getiine(name)
     }
 
-    getiine = (screen_name: string) => {
-        twitterAPI(screen_name, this.state.images.max_id)
-            .then((res: any) => {
-                console.log(res.body)
-                this.setIineImages(res.body)
-            })
-            .catch(() => {
-                this.setState({
-                    message: "取得に失敗しました。データが空か、スクリーンネームが間違っているかもしれません。",
-                });
-            });
+    const getiine = async (name: string): Promise<void> => {
+      try {
+        const response: any = await twitterAPI(name, maxId)
+        console.log(response.body)
+        setIineImages(response.body)
+      } catch {
+        setMessage("取得に失敗しました。データが空か、スクリーンネームが間違っているかもしれません。");
+      }     
     }
 
-    setIineImages = (results: any) => {
-        this.setState({
-            images: {
-                images: this.state.images.images.concat(results.images),
-                max_id: String(results.max_id)
-            }
-        })
-        if (results.url.length === 0) {
-            this.setState({ message: "いいねした画像がありませんでした" });
-            return;
-        }
-        this.setState({
-            message: ""
-        });
+  const setIineImages = (results: any) => {
+    setMaxId(results.max_id)
+    setImages(images.concat(results.images))
+
+    if (results.images.length === 0) {
+      setMessage("いいねした画像がありませんでした");
+    }
+    setMessage("");
     };
 
-    componentDidMount() {
-            let queue: NodeJS.Timeout;
-            window.addEventListener("scroll", () => {
-                clearTimeout(queue);
-                queue = setTimeout(() => {
-                    const scroll_Y = document.documentElement.scrollTop + window.innerHeight;
-                    const offsetHeight = document.documentElement.offsetHeight;
-                    if (
-                        offsetHeight - scroll_Y <= 1000 &&
-                        this.state.message !== "loading..." &&
-                        offsetHeight > 1500
-                    ) {
-                        this.setState({ message: "loading..." });
-                        this.getiine(this.state.screen_name);
-                    }
-                }, 500);
-            });
-    }
+  const twitterAPI = async (screen_name: string, max_id: string): Promise<typeImages> => {
+    let endpoint = `http://${process.env.ENDPOINT}/api/twitter?name=${screen_name}&max_id=${max_id}`
+    console.log(endpoint)
 
-    render() {
-        return (
-            <div>
-                <InputForm screen_name={""} onSubmit={(screen_name: string) => this.handleSubmit(screen_name)} />
-                <ImageList imageItems={this.state.images.images} />
-                <div className="box h-64 text-center m-5 p-4 ...">
-                    {this.state.message}
-                </div>
-            </div>
-        );
+    try {
+      console.log('hello')
+      const response: any = await axios.get(endpoint);
+      return response.data
+    } catch (error) {
+      console.log(error)
+      throw (Error)
     }
+  }
+
+    return (
+        <div>
+            <InputForm screen_name={""} onSubmit={(screen_name: string) => handleSubmit(screen_name)} />
+            <ImageList imageItems={images} />
+            <div className="box h-64 text-center m-5 p-4 ...">
+                {message}
+            </div>
+        </div>
+    );
 }
 export default MainTable;
 
-function twitterAPI(screen_name: string, max_id: string) {
-    let endpoint = `http://${process.env.ENDPOINT}/api/twitter?name=${screen_name}&max_id=${max_id}`
-    console.log(endpoint)
-    return new Promise((resolve, reject) => {
-        axios.get(endpoint)
-            .then((res: any) => {
-                resolve(res.data);
-            })
-            .catch((err) => {
-                console.log(err)
-                reject(err);
-            });
-    });
-}
+// 無限スクロール
+// componentDidMount() {
+//         let queue: NodeJS.Timeout;
+//         window.addEventListener("scroll", () => {
+//             clearTimeout(queue);
+//             queue = setTimeout(() => {
+//                 const scroll_Y = document.documentElement.scrollTop + window.innerHeight;
+//                 const offsetHeight = document.documentElement.offsetHeight;
+//                 if (
+//                     offsetHeight - scroll_Y <= 1000 &&
+//                     this.state.message !== "loading..." &&
+//                     offsetHeight > 1500
+//                 ) {
+//                     this.setState({ message: "loading..." });
+//                     this.getiine(this.state.screen_name);
+//                 }
+//             }, 500);
+//         });
+// }

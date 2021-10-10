@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import TwitterApi, { TweetV1 } from "twitter-api-v2";
-import { FavoriteImage } from '../domain/favarite-image';
+import { FavoriteImage } from '../../domain/favarite-image';
 
 const token = process.env.APP_USER_TOKEN ?? "";
 

@@ -2,10 +2,8 @@ import React from "react";
 import { useInput } from "../hooks/input";
 
 interface InputFormProps {
-  screen_name: string;
   onSubmit: any
 };
-
 
 const InputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
   const { value, bind } = useInput('');
@@ -14,6 +12,7 @@ const InputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
     event.preventDefault();
     onSubmit(value);
   }
+
   return (
     <form onSubmit={handleSubmit}>
         <div className="flex mb-5 mx-auto max-w-xs">
