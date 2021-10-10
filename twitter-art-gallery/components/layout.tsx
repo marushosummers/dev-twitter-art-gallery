@@ -10,7 +10,7 @@ export default function Layout({ children }) {
         <meta property="og:title" content="Twitter Art Gallery" key="title" />
       </Head>
       <main>
-        <div className="nm-flat-white-500">
+        <div className="nm-inset-gray-50">
           <Header />
           {children}
         </div>

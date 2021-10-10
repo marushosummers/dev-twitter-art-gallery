@@ -4,13 +4,18 @@ import Router from "next/router";
 
 const Nav: React.FC<{}> = ({ }) => {
 
+  const pressEnter = (e) => {
+    if (e.key == 'Enter') {
+      
+    }
+  }
+
   const handleSubmit = (name: string) => {
     Router.push(`/twitter/${name}`)
   }
 
   return (
     <div className="">
-      Nav
       <InputForm onSubmit={(screen_name: string) => handleSubmit(screen_name)} />
     </div>
   );
