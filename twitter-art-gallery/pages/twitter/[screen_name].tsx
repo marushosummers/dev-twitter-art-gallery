@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import MainTable from "../../components/MainTable";
-import Layout from '../../components/layout'
+import Layout from '../../components/Layout'
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -61,7 +61,7 @@ const TwitterScreenName = () => {
   };
 
   const twitterAPI = async (screen_name: string, max_id: number): Promise<typeImages> => {
-    let endpoint = `http://${process.env.ENDPOINT}/api/twitter?name=${screen_name}`
+    let endpoint = `${process.env.ENDPOINT}/api/twitter?name=${screen_name}`
     if (max_id) {
       endpoint += `&max_id=${max_id}`
     }
