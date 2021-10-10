@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import MainTable from "../../components/MainTable";
-import Layout from '../../components/Layout'
+import Layout from '../../components/layout'
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
