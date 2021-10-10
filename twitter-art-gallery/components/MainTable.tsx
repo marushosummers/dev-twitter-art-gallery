@@ -76,7 +76,7 @@ const MainTable: React.FC<MainTableProps> = (props) => {
 
     return (
         <div>
-            <InputForm screen_name={""} onSubmit={(screen_name: string) => handleSubmit(screen_name)} />
+            <InputForm onSubmit={(screen_name: string) => handleSubmit(screen_name)} />
             <ImageList imageItems={images} />
             <div className="box h-64 text-center m-5 p-4 ...">
                 {message}
