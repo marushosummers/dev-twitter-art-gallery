@@ -10,7 +10,7 @@ export default function Layout({ children }) {
         <meta property="og:title" content="Garoo" key="title" />
       </Head>
       <main>
-        <div className="nm-flat-gray-50">
+        <div className="nm-flat-gray-100">
           <Header />
           {children}
         </div>

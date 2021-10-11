@@ -15,16 +15,16 @@ const InputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="relative rounded-md shadow-sm mx-1 w-48">
+      <div className="relative mx-1 w-48">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <span className="text-gray-500 sm:text-sm">@</span>
+          <span className="text-gray-1000 sm:text-sm">@</span>
         </div>
         <input
           type="text"
           {...bind}
           autoCapitalize="off"
           name="screen_name"
-          className="nm-flat-gray-50 focus:outline-none text-gray-500 focus:shadow-outline py-2 px-7 mx-1 rounded-full w-full mb-1"
+          className="nm-flat-gray-100 focus:outline-none text-gray-1000 focus:shadow-outline py-2 px-7 mx-1 rounded-full w-full mb-1"
         />
       </div>
     </form>

@@ -82,7 +82,7 @@ const TwitterScreenName = () => {
       <div className="min-h-screen" >
         <div className="container mx-auto" >
           <div className="flex justify-center items-center text-3xl h-32 mx-5" >
-            <div className="nm-flat-gray-50 p-3 rounded-xl" >
+            <div className="nm-flat-gray-100 p-3 rounded-xl" >
               @{screenName}
             </div>
           </div>
