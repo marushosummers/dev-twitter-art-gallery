@@ -32,6 +32,7 @@ const TwitterScreenName = () => {
   const [screenName, setScreenName] = useState(name)
   const [images, setImages] = useState([])
   const [message, setMessage] = useState("loading...")
+  const [loading, setLoading] = useState(true)
   const [maxId, setMaxId] = useState(0)
 
   useEffect(() => {
@@ -57,7 +58,8 @@ const TwitterScreenName = () => {
     if (results.images.length === 0) {
       setMessage("いいねした画像がありませんでした");
     }
-    setMessage("");
+    setMessage("")
+    setLoading(false);
   };
 
   const twitterAPI = async (screen_name: string, max_id: number): Promise<typeImages> => {
@@ -75,6 +77,18 @@ const TwitterScreenName = () => {
       console.log(error)
       throw (Error)
     }
+  }
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="min-h-screen" >
+          <div className=" flex justify-center items-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+          </div>
+          </div>
+      </Layout>
+    );
   }
 
   return (
