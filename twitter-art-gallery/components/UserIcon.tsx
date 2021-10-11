@@ -1,12 +1,12 @@
 import React from 'react';
 import Image from 'next/image'
 
-export default function UserIcon({ screenName, icon }) {
+export default function UserIcon({ name, icon }) {
   if (icon) {
     return (
       <div>
         <div className="flex justify-center items-center" >
-          <a href={`https://twitter.com/${screenName}`}>
+          <a href={`https://twitter.com/${name}`}>
             <div className="nm-flat-gray-100 flex justify-center items-center p-2 mb-8 rounded-full" >
               <Image
                 src={icon}
