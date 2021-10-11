@@ -26,7 +26,7 @@ const InputForm: React.FC<InputFormProps> = ({ name, onSubmit }) => {
           autoCapitalize="off"
           name="screen_name"
           placeholder={name}
-          className="nm-flat-gray-100 focus:outline-none text-gray-500 focus:shadow-outline py-2 pl-8 pr-4 mx-1 rounded-full w-full mb-1"
+          className="nm-flat-gray-100 focus:outline-none text-gray-500 focus:shadow-outline py-2 pl-8 pr-4 mx-1 rounded-full w-full mb-1 appearance-none"
         />
       </div>
     </form>
