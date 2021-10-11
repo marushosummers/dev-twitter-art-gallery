@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import TwitterApi, { TweetV1 } from "twitter-api-v2";
-import { FavoriteImage } from '../../domain/favarite-image';
+import { FavoriteImage } from '../../../domain/favarite-image';
 
 const token = process.env.APP_USER_TOKEN ?? "";
 
@@ -11,7 +11,7 @@ const controller = async (request: NextApiRequest, response: NextApiResponse) =>
   const params = { name: request.query.name, max_id: request.query.max_id };
 
   // TODO: エラーハンドリング
-  console.log(params);
+  // console.log(params);
   const favoliteImages = await getFavoliteTweets(params)
 
   response.json({
@@ -44,7 +44,7 @@ const extractImages = (tweets: any): FavoriteImage[] => {
     if (tweet.entities.media) {
       if (tweet.entities.media[0].type == "photo") {
         if (!tweet.entities.media[0].media_url_https.includes("video_thumb")) {
-          console.log(tweet.entities.media[0])
+          // console.log(tweet.entities.media[0])
           return new FavoriteImage({
             id: tweet.id,
             url: tweet.entities.media[0].media_url_https,

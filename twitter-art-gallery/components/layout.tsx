@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import Header from './Header';
 
 export default function Layout({ children }) {
   return (
@@ -11,7 +10,6 @@ export default function Layout({ children }) {
       </Head>
       <main>
         <div className="nm-flat-gray-100">
-          <Header />
           {children}
         </div>
       </main>

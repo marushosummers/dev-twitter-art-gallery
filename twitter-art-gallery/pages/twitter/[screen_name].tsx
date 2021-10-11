@@ -3,6 +3,7 @@ import MainTable from "../../components/MainTable";
 import Layout from '../../components/layout'
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Header from "../../components/Header";
 
 interface typeImages {
   images: ImageItem[];
@@ -63,7 +64,7 @@ const TwitterScreenName = () => {
   };
 
   const twitterAPI = async (screen_name: string, max_id: number): Promise<typeImages> => {
-    let endpoint = `${process.env.ENDPOINT}/api/twitter?name=${screen_name}`
+    let endpoint = `${process.env.ENDPOINT}/api/twitter/fav?name=${screen_name}`
     if (max_id) {
       endpoint += `&max_id=${max_id}`
     }
@@ -82,6 +83,7 @@ const TwitterScreenName = () => {
   if (loading) {
     return (
       <Layout>
+        <Header />
         <div className="min-h-screen" >
           <div className=" flex justify-center items-center">
             <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-500"></div>
@@ -93,6 +95,7 @@ const TwitterScreenName = () => {
 
   return (
     <Layout>
+      <Header />
       <div className="min-h-screen" >
         <div className="container mx-auto" >
           <div className="flex justify-center items-center text-3xl h-32 mx-5" >
