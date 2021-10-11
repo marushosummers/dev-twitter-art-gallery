@@ -83,7 +83,7 @@ const TwitterScreenName = () => {
   if (loading) {
     return (
       <Layout>
-        <Header />
+        <Header name={screenName} />
         <div className="min-h-screen" >
           <div className=" flex justify-center items-center">
             <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-500"></div>
@@ -95,7 +95,7 @@ const TwitterScreenName = () => {
 
   return (
     <Layout>
-      <Header />
+      <Header name={screenName} />
       <div className="min-h-screen" >
         <div className="container mx-auto" >
           <div className="flex justify-center items-center text-3xl h-32 mx-5" >

@@ -2,10 +2,11 @@ import React from "react";
 import { useInput } from "../hooks/input";
 
 interface InputFormProps {
+  name: string
   onSubmit: any
 };
 
-const InputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
+const InputForm: React.FC<InputFormProps> = ({ name, onSubmit }) => {
   const { value, bind } = useInput('');
 
   const handleSubmit = (event) => {
@@ -24,6 +25,7 @@ const InputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
           {...bind}
           autoCapitalize="off"
           name="screen_name"
+          placeholder={name}
           className="nm-flat-gray-100 focus:outline-none text-gray-500 focus:shadow-outline py-2 px-8 mx-1 rounded-full w-full mb-1"
         />
       </div>

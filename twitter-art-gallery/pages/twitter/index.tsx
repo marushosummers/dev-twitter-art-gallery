@@ -2,8 +2,6 @@ import type { NextPage } from 'next'
 import Router from "next/router";
 import InputForm from '../../components/InputForm'
 import Layout from '../../components/layout'
-import MainTable from '../../components/MainTable'
-import Nav from '../../components/Nav'
 
 const TwitterPage: NextPage = () => {
   const handleSubmit = (name: string) => {
@@ -18,7 +16,7 @@ const TwitterPage: NextPage = () => {
             Garoo
           </div>
           <div className="mb-28">
-            <InputForm onSubmit={(screen_name: string) => handleSubmit(screen_name)} />
+            <InputForm name={""} onSubmit={(screen_name: string) => handleSubmit(screen_name)} />
           </div>
         </div>
       </div>
