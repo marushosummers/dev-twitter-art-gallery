@@ -15,7 +15,7 @@ const ImageList: React.FC<ImageListProps> = ({ imageItems }) => {
                     src={image.url}
                     width={600}
                     height={600 * image.height/image.width}
-
+                    className="rounded-md"
                   />
                 </div>
               </a>
