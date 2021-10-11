@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
-import Image from 'next/image'
+
 import MainTable from "../../components/MainTable";
 import Layout from '../../components/layout'
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "../../components/Header";
+import UserIcon from "../../components/UserIcon";
 
 
 interface typeUser {
@@ -60,6 +61,7 @@ const TwitterScreenName = () => {
       setIcon(response.body.user.image)
     } catch {
       setMessage("取得に失敗しました。データが空か、スクリーンネームが間違っているかもしれません。");
+      setLoading(false);
     }
   }
 
@@ -69,6 +71,7 @@ const TwitterScreenName = () => {
       setIineImages(response.body)
     } catch {
       setMessage("取得に失敗しました。データが空か、スクリーンネームが間違っているかもしれません。");
+      setLoading(false);
     }
   }
 
@@ -132,23 +135,7 @@ const TwitterScreenName = () => {
       <Header name={screenName} />
       <div className="min-h-screen" >
         <div className="container mx-auto" >
-          <div className="flex justify-center items-center" >
-            <div className="nm-flat-gray-100 flex justify-center items-center p-2 mb-8 rounded-full" >
-              <Image
-                src={icon}
-                width={48}
-                height={48}
-                className="rounded-full"
-              />
-            </div>
-          </div>
-          <div className="flex justify-center items-center" >
-            <div className="nm-inset-gray-100 flex justify-center items-center p-2 mb-8 rounded-full" >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="#F91780">
-                <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
-              </svg>
-            </div>
-          </div>
+          <UserIcon name={screenName} icon={icon} />
           <div className="flex justify-center" >
               <MainTable screen_name={screenName} images={images} max_id={maxId} message={message} />
           </div>
