@@ -7,6 +7,7 @@ import Layout from '../../components/layout'
 import Header from "../../components/Header";
 import UserIcon from "../../components/UserIcon";
 import PageTransition from "../../components/PageTransition";
+import Loading from "../../components/Loading";
 
 interface typeUser {
   id: number
@@ -49,13 +50,7 @@ const TwitterScreenName = () => {
     return (
       <Layout>
         <Header name={name} />
-        <PageTransition key={"loading"}>
-          <div className="min-h-screen" >
-            <div className="flex justify-center items-center">
-              <div className="animate-spin rounded-full h-20 w-20 border-t-2 border-b-2 border-gray-500"></div>
-            </div>
-          </div>
-        </PageTransition>
+        <Loading />
       </Layout>
     );
   }
