@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import useSWR from 'swr'
 import useSWRInfinite from 'swr/infinite'
 
-import MainTable from "../../components/MainTable";
+import ImageView from "../../components/ImageView";
 import Layout from '../../components/layout'
 import Header from "../../components/Header";
 import UserIcon from "../../components/UserIcon";
@@ -79,7 +79,7 @@ const TwitterScreenName = () => {
           <div className="container mx-auto" >
             <UserIcon name={name} icon={icon} />
             <div className="flex justify-center" >
-              <MainTable screen_name={name} images={images} />
+              <ImageView screen_name={name} images={images} />
             </div>
             <div className="flex justify-center" >
               <button onClick={() => fav.setSize(fav.size + 1)} className="nm-flat-gray-100 rounded-xl text-center m-12 p-4">Load</button>
