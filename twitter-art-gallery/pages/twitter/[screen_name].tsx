@@ -36,16 +36,14 @@ const TwitterScreenName = () => {
   const { screen_name } = router.query;
   const name: string = typeof screen_name === "string" ? screen_name : "";
 
-  const [message, setMessage] = useState("loading...")
 
   const fetcher = (url) => fetch(url).then((res) => res.json())
   const userPath = (name: string): string => {
     return `/api/twitter/user?name=${name}`
   }
   const favPath = (pageIndex, previousPageData, name) => {
-    if (previousPageData && !previousPageData.images) return null
-    if (pageIndex === 0) return `/api/twitter/fav?name=${name}`
-    // API のエンドポイントにカーソルを追加します
+    if (previousPageData && !previousPageData.images) return null // end of data
+    if (pageIndex === 0) return `/api/twitter/fav?name=${name}` // first data
     return `/api/twitter/fav?name=${name}&max_id=${previousPageData.max_id}`
   }
 
@@ -55,7 +53,12 @@ const TwitterScreenName = () => {
     fetcher
   )
 
-  if (user.error || fav.error) return <div>Error</div>
+  if (user.error || fav.error) {
+    <Layout>
+      <Header name={name} />
+      <Loading />
+    </Layout>
+  }
   if (!user.data || !fav.data) {
     return (
       <Layout>
@@ -65,23 +68,22 @@ const TwitterScreenName = () => {
     );
   }
 
-  const screenName = user.data.user.name ?? ""
   const icon = user.data.user.image ?? "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png"
   const images = fav.data.reduce((pre, cur) => pre.concat(cur.images), []) ?? []
 
   return (
     <Layout>
-      <Header name={screenName} />
-      <PageTransition key={screenName}>
+      <Header name={name} />
+      <PageTransition key={name}>
         <div className="min-h-screen" >
           <div className="container mx-auto" >
-            <UserIcon name={screenName} icon={icon} />
-              <div className="flex justify-center" >
-                <MainTable screen_name={screenName} images={images} />
-              </div>
+            <UserIcon name={name} icon={icon} />
+            <div className="flex justify-center" >
+              <MainTable screen_name={name} images={images} />
+            </div>
             <div className="flex justify-center" >
               <button onClick={() => fav.setSize(fav.size + 1)} className="nm-flat-gray-100 rounded-xl text-center m-12 p-4">Load</button>
-              </div>
+            </div>
           </div>
         </div>
       </PageTransition>

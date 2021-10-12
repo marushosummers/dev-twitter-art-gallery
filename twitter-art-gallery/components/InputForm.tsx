@@ -7,7 +7,7 @@ interface InputFormProps {
 };
 
 const InputForm: React.FC<InputFormProps> = ({ name, onSubmit }) => {
-  const { value, bind } = useInput('');
+  const { value, bind } = useInput(name);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -21,11 +21,10 @@ const InputForm: React.FC<InputFormProps> = ({ name, onSubmit }) => {
           <span className="text-gray-500 text-sm">@</span>
         </div>
         <input
-          type="text"
+          type="search"
           {...bind}
           autoCapitalize="off"
           name="screen_name"
-          placeholder={name}
           className="nm-flat-gray-100 focus:outline-none text-gray-500 focus:shadow-outline py-2 pl-8 pr-4 mx-1 rounded-full w-full mb-1 appearance-none"
         />
       </div>
