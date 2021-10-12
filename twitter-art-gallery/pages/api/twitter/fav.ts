@@ -11,20 +11,12 @@ const controller = async (request: NextApiRequest, response: NextApiResponse) =>
   const params = { name: request.query.name, max_id: request.query.max_id };
 
   // TODO: エラーハンドリング
-  // console.log(params);
+  console.log(params);
   const favoliteImages = await getFavoliteTweets(params)
 
   response.json({
-    statusCode: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "Content-Type",
-      "Access-Control-Allow-Methods": "OPTIONS,GET",
-    },
-    body: {
       max_id: getMaxId(favoliteImages),
       images: favoliteImages,
-    }
   })
 };
 
@@ -61,8 +53,8 @@ const extractImages = (tweets: any): FavoriteImage[] => {
 };
 
 const getMaxId = (favolitImages: FavoriteImage[]): number => {
-  const maxImage = favolitImages.reduce((prev, current) => ((prev.id > current.id) ? prev : current));
-  return maxImage.id
+  const maxImage = favolitImages.reduce((prev, current) => ((prev.id < current.id) ? prev : current));
+  return maxImage.id - 1000
 };
 
 export default controller;

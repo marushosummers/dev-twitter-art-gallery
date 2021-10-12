@@ -12,20 +12,12 @@ const controller = async (request: NextApiRequest, response: NextApiResponse) =>
   const name = typeof params.name === "string" ? params.name : params.name[0]
 
   // TODO: エラーハンドリング
-  console.log(params);
+  // console.log(params);
   try {
     const user = await getUser(name)
 
     response.json({
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "OPTIONS,GET",
-      },
-      body: {
         user: user,
-      }
     })
   } catch (error) {
     if (error.code === 404) {
@@ -53,7 +45,7 @@ const controller = async (request: NextApiRequest, response: NextApiResponse) =>
 
 const getUser = async (name: string): Promise<User> => {
   const user = await client.v1.get('users/show.json', { screen_name: name });
-  console.log(user)
+  // console.log(user)
   return extractUser(user)
 };
 

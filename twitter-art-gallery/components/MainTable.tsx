@@ -5,8 +5,6 @@ import Loading from "./Loading";
 interface MainTableProps {
   screen_name: string;
   images: ImageItem[];
-  message: string;
-  max_id: number;
 }
 
 export interface ImageListProps {
@@ -25,10 +23,6 @@ const MainTable: React.FC<MainTableProps> = (props) => {
   return (
     <div className="">
       <ImageList imageItems={props.images} />
-      <Loading />
-      <div className="box h-64 text-center m-5 p-4">
-          {props.message}
-      </div>
     </div>
   );
 }

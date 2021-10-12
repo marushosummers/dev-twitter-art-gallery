@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useSWR from 'swr'
+import useSWRInfinite from 'swr/infinite'
 
 import MainTable from "../../components/MainTable";
 import Layout from '../../components/layout'
@@ -41,9 +42,18 @@ const TwitterScreenName = () => {
   const userPath = (name: string): string => {
     return `/api/twitter/user?name=${name}`
   }
+  const favPath = (pageIndex, previousPageData, name) => {
+    if (previousPageData && !previousPageData.images) return null
+    if (pageIndex === 0) return `/api/twitter/fav?name=${name}`
+    // API のエンドポイントにカーソルを追加します
+    return `/api/twitter/fav?name=${name}&max_id=${previousPageData.max_id}`
+  }
 
   const user = useSWR(userPath(name), fetcher)
-  const fav = useSWR(`/api/twitter/fav?name=${name}`, fetcher)
+  const fav = useSWRInfinite(
+    (...args) => favPath(...args, name),
+    fetcher
+  )
 
   if (user.error || fav.error) return <div>Error</div>
   if (!user.data || !fav.data) {
@@ -55,21 +65,9 @@ const TwitterScreenName = () => {
     );
   }
 
-  const screenName = user.data.body.user.name ?? ""
-  const icon = user.data.body.user.image ?? "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png"
-  const images = fav.data.body.images ?? []
-  const maxId = user.data.body.max_id ?? 0
-
-  const getKey = (pageIndex, previousPageData) => {
-    // 最後に到達した
-    if (previousPageData && !previousPageData.data) return null
-
-    // 最初のページでは、`previousPageData` がありません
-    if (pageIndex === 0) return `/users?limit=10`
-
-    // API のエンドポイントにカーソルを追加します
-    return `/users?cursor=${previousPageData.nextCursor}&limit=10`
-  }
+  const screenName = user.data.user.name ?? ""
+  const icon = user.data.user.image ?? "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png"
+  const images = fav.data.reduce((pre, cur) => pre.concat(cur.images), []) ?? []
 
   return (
     <Layout>
@@ -78,9 +76,12 @@ const TwitterScreenName = () => {
         <div className="min-h-screen" >
           <div className="container mx-auto" >
             <UserIcon name={screenName} icon={icon} />
+              <div className="flex justify-center" >
+                <MainTable screen_name={screenName} images={images} />
+              </div>
             <div className="flex justify-center" >
-                <MainTable screen_name={screenName} images={images} max_id={maxId} message={message} />
-            </div>
+              <button onClick={() => fav.setSize(fav.size + 1)} className="nm-flat-gray-100 rounded-xl text-center m-12 p-4">Load</button>
+              </div>
           </div>
         </div>
       </PageTransition>
