@@ -6,7 +6,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "../../components/Header";
 import UserIcon from "../../components/UserIcon";
-
+import { motion } from "framer-motion";
+import PageTransition from "../../components/PageTransition";
 
 interface typeUser {
   id: number
@@ -43,13 +44,14 @@ const TwitterScreenName = () => {
 
   const [screenName, setScreenName] = useState(name)
   const [images, setImages] = useState([])
-  const [icon, setIcon] = useState("")
+  const [icon, setIcon] = useState("https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png")
   const [message, setMessage] = useState("loading...")
   const [loading, setLoading] = useState(true)
   const [maxId, setMaxId] = useState(0)
 
   useEffect(() => {
     if (!router.isReady) return;
+    setLoading(true)
     setScreenName(name)
     getUser(name)
     getiine(name)
@@ -121,11 +123,13 @@ const TwitterScreenName = () => {
     return (
       <Layout>
         <Header name={screenName} />
+        <PageTransition key={String(loading)}>
         <div className="min-h-screen" >
-          <div className=" flex justify-center items-center">
-            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-500"></div>
+          <div className="flex justify-center items-center">
+            <div className="animate-spin rounded-full h-20 w-20 border-t-2 border-b-2 border-gray-500"></div>
           </div>
           </div>
+        </PageTransition>
       </Layout>
     );
   }
@@ -133,14 +137,16 @@ const TwitterScreenName = () => {
   return (
     <Layout>
       <Header name={screenName} />
-      <div className="min-h-screen" >
-        <div className="container mx-auto" >
-          <UserIcon name={screenName} icon={icon} />
-          <div className="flex justify-center" >
-              <MainTable screen_name={screenName} images={images} max_id={maxId} message={message} />
+      <PageTransition key={String(loading)}>
+        <div className="min-h-screen" >
+          <div className="container mx-auto" >
+            <UserIcon name={screenName} icon={icon} />
+            <div className="flex justify-center" >
+                <MainTable screen_name={screenName} images={images} max_id={maxId} message={message} />
+            </div>
           </div>
         </div>
-      </div>
+      </PageTransition>
     </Layout>
   );
 };

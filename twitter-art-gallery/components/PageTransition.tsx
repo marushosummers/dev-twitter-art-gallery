@@ -1,10 +1,10 @@
-import '../styles/globals.css'
+import React from 'react';
 import { motion } from "framer-motion";
 
-function MyApp({ Component, pageProps, router }) {
+export default function PageTransition({ key, children }) {
   return (
     <motion.div
-      key={router.route}
+      key={key}
       initial="initial"
       animate="animate"
       variants={{
@@ -16,9 +16,7 @@ function MyApp({ Component, pageProps, router }) {
         },
       }}
     >
-      <Component {...pageProps} />
+      {children}
     </motion.div>
-  );
+  )
 }
-
-export default MyApp

@@ -5,6 +5,6 @@ module.exports = {
     ENDPOINT: process.env.ENDPOINT,
   },
   images: {
-    domains: ['pbs.twimg.com'],
+    domains: ['pbs.twimg.com','abs.twimg.com'],
   },
 }
