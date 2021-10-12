@@ -55,6 +55,7 @@ const TwitterScreenName = () => {
     fetcher
   )
 
+  // TODO: エラーハンドリングをする
   if (user.error || fav.error) {
     <Layout>
       <Header name={name} />
