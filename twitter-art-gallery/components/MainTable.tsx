@@ -25,6 +25,11 @@ const MainTable: React.FC<MainTableProps> = (props) => {
   return (
     <div className="">
       <ImageList imageItems={props.images} />
+      <div className="min-h-screen" >
+        <div className="flex justify-center items-center">
+          <div className="animate-spin rounded-full h-20 w-20 border-t-2 border-b-2 border-gray-500"></div>
+        </div>
+      </div>
       <div className="box h-64 text-center m-5 p-4">
           {props.message}
       </div>

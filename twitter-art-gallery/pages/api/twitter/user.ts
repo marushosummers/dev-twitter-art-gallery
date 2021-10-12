@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import TwitterApi, { TweetV1 } from "twitter-api-v2";
+import TwitterApi from "twitter-api-v2";
 import { User } from '../../../domain/user';
 
 const token = process.env.APP_USER_TOKEN ?? "";
