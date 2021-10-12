@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useSWR from 'swr'
 import useSWRInfinite from 'swr/infinite'
+import InfiniteScroll from 'react-infinite-scroller';
 
 import ImageView from "../../components/ImageView";
 import Layout from '../../components/layout'
@@ -42,8 +43,9 @@ const TwitterScreenName = () => {
     return `/api/twitter/user?name=${name}`
   }
   const favPath = (pageIndex, previousPageData, name) => {
-    if (previousPageData && !previousPageData.images) return null // end of data
     if (pageIndex === 0) return `/api/twitter/fav?name=${name}` // first data
+    if (previousPageData && !previousPageData.images) return null // end of data
+    if (!previousPageData.max_id) return null // invalid request
     return `/api/twitter/fav?name=${name}&max_id=${previousPageData.max_id}`
   }
 
@@ -68,10 +70,24 @@ const TwitterScreenName = () => {
     );
   }
 
+  const isLoading = fav.size !== fav.data.length;
+  const loadFav = () => {
+    if (!isLoading) {
+      fav.setSize(fav.size + 1);
+    }
+  };
+
   const icon = user.data.user.image ?? "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png"
   const images = fav.data.reduce((pre, cur) => pre.concat(cur.images), []) ?? []
 
   return (
+    <InfiniteScroll
+      pageStart={0}
+      loadMore={loadFav}
+      hasMore={true}
+      loader={<div></div>}
+    >
+
     <Layout>
       <Header name={name} />
       <PageTransition key={name}>
@@ -81,13 +97,11 @@ const TwitterScreenName = () => {
             <div className="flex justify-center" >
               <ImageView screen_name={name} images={images} />
             </div>
-            <div className="flex justify-center" >
-              <button onClick={() => fav.setSize(fav.size + 1)} className="nm-flat-gray-100 rounded-xl text-center m-12 p-4">Load</button>
-            </div>
           </div>
         </div>
       </PageTransition>
-    </Layout>
+      </Layout>
+    </InfiniteScroll>
   );
 };
 
