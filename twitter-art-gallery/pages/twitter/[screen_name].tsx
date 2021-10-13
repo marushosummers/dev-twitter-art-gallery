@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import type { NextPage } from 'next'
+import React from "react";
 import { useRouter } from "next/router";
 import useSWR from 'swr'
 import useSWRInfinite from 'swr/infinite'
@@ -32,7 +33,7 @@ export type ImageItem = {
   source: string;
 };
 
-const TwitterScreenName = () => {
+const TwitterScreenName: NextPage  = () => {
   const router = useRouter();
   const { screen_name } = router.query;
   const name: string = typeof screen_name === "string" ? screen_name : "";

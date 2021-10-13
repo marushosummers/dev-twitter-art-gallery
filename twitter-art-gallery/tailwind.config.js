@@ -6,9 +6,10 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: {
-
-    },
+    neumorphismFlat: ['responsive'],
+    neumorphismConcave: false,
+    neumorphismConvex: ['responsive', 'hover'],
+    neumorphismInset: ['focus', 'active'],
   },
   plugins: [require('tailwindcss-neumorphism')],
 }
