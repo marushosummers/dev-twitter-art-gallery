@@ -7,7 +7,7 @@ export default function UserIcon({ name, icon }) {
       <div>
         <div className="flex justify-center items-center" >
           <a href={`https://twitter.com/${name}`}>
-            <div className="nm-flat-gray-100 flex justify-center items-center p-2 mb-8 rounded-full" >
+            <div className="nm-flat-gray-100 flex justify-center items-center p-0 mb-8 rounded-full" >
               <Image
                 src={icon}
                 width={48}
