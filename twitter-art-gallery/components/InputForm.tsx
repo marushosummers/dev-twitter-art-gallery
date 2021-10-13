@@ -16,10 +16,9 @@ const InputForm: React.FC<InputFormProps> = ({ name, onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit} >
-      <div className="mx-1 w-48">
+      <div className="x-1 w-48">
         <div className="nm-flat-gray-100 flex justify-between py-2 pl-3 pr-3 mx-1 rounded-full w-full">
           <span className="text-gray-400 text-sm mt-0.5">@</span>
-
           <input
             type="search"
             {...bind}

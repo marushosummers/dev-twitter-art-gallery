@@ -5,7 +5,6 @@ export default class Document extends NextDocument {
     return (
       <Html>
         <Head>
-          <title>Garoo</title>
           <meta name="description" content="Twitter Image Viewer" />
           <meta itemProp="name" content="Garoo" />
           <meta itemProp="description" content="Twitter Image Viewer" />

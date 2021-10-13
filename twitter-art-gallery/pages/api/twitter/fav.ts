@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import TwitterApi, { TweetV1 } from "twitter-api-v2";
 import { FavoriteImage } from '../../../domain/favarite-image';
+import errorHandler from '../../../helpers/api/errorHandler';
 
 const token = process.env.APP_USER_TOKEN ?? "";
 
@@ -12,12 +13,17 @@ const controller = async (request: NextApiRequest, response: NextApiResponse) =>
 
   // TODO: エラーハンドリング
   console.log(params);
-  const favoliteImages = await getFavoliteTweets(params)
 
-  response.json({
-      max_id: getMaxId(favoliteImages),
-      images: favoliteImages,
-  })
+  try{
+    const favoliteImages = await getFavoliteTweets(params)
+    response.json({
+        max_id: getMaxId(favoliteImages),
+        images: favoliteImages,
+    })
+  } catch (error) {
+    console.log(error)
+    errorHandler(error, response);
+  }
 };
 
 const getFavoliteTweets = async (params: { name: string | string[], max_id: string | string[] }): Promise<FavoriteImage[]> => {

@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import TwitterApi from "twitter-api-v2";
 import { User } from '../../../domain/user';
+import errorHandler from '../../../helpers/api/errorHandler';
 
 const token = process.env.APP_USER_TOKEN ?? "";
 
@@ -20,26 +21,9 @@ const controller = async (request: NextApiRequest, response: NextApiResponse) =>
         user: user,
     })
   } catch (error) {
-    if (error.code === 404) {
-      response.json({
-        statusCode: 404,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "Content-Type",
-          "Access-Control-Allow-Methods": "OPTIONS,GET",
-        }
-      })
-    } else {
-      response.json({
-        statusCode: 500,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "Content-Type",
-          "Access-Control-Allow-Methods": "OPTIONS,GET",
-        }
-      })
-    }
-
+    console.log("0000000000000000000000")
+    console.log(error)
+    errorHandler(error, response);
   }
 };
 

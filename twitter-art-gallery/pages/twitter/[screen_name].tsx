@@ -38,8 +38,11 @@ const TwitterScreenName: NextPage  = () => {
   const { screen_name } = router.query;
   const name: string = typeof screen_name === "string" ? screen_name : "";
 
-
-  const fetcher = (url) => fetch(url).then((res) => res.json())
+  const fetcher = async (url) => {
+    const res = await fetch(url)
+    if (!res.ok) throw new Error(`${res.status}`);
+    return res.json()
+  }
   const userPath = (name: string): string => {
     return `/api/twitter/user?name=${name}`
   }
@@ -50,24 +53,44 @@ const TwitterScreenName: NextPage  = () => {
     return `/api/twitter/fav?name=${name}&max_id=${previousPageData.max_id}`
   }
 
-  const user = useSWR(userPath(name), fetcher)
+  const { data: userData, error: userError } = useSWR(userPath(name), fetcher, { shouldRetryOnError: false })
   const fav = useSWRInfinite(
     (...args) => favPath(...args, name),
-    fetcher
+    fetcher,
+    { shouldRetryOnError: false }
   )
-
+console.log(userError)
   // TODO: エラーハンドリングをする
-  if (user.error || fav.error) {
+  if (userError || fav.error) {
+    return (
     <Layout>
       <Header name={name} />
-      <Loading />
-    </Layout>
+        <div className="flex justify-center">
+          <span className="nm-inset-gray-100 text-gray-500 text-sm mx-auto my-20 p-5 rounded-full">
+            ユーザーが見つかりませんでした
+          </span>
+        </div>
+      </Layout>
+    )
   }
-  if (!user.data || !fav.data) {
+  if (!userData || !fav.data) {
     return (
       <Layout>
         <Header name={name} />
-        <Loading />
+        <Loading key={name}/>
+      </Layout>
+    );
+  }
+
+  if (!userData.user || !fav.data[0].images) {
+    return (
+      <Layout>
+        <Header name={name} />
+        <div className="flex justify-center">
+          <span className="nm-inset-gray-100 text-gray-500 text-sm mx-auto my-20 p-5 rounded-full">
+            画像が見つかりませんでした
+          </span>
+        </div>
       </Layout>
     );
   }
@@ -79,8 +102,8 @@ const TwitterScreenName: NextPage  = () => {
     }
   };
 
-  const icon = user.data.user.image ?? "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png"
-  const images = fav.data.reduce((pre, cur) => pre.concat(cur.images), []) ?? []
+  const icon = userData.user?.image ?? "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png"
+  const images = fav.data.reduce((pre, cur) => pre.concat(cur?.images), []) ?? []
 
   return (
     <InfiniteScroll
@@ -89,11 +112,10 @@ const TwitterScreenName: NextPage  = () => {
       hasMore={true}
       loader={<div></div>}
     >
-
     <Layout>
       <Header name={name} />
       <PageTransition key={name}>
-        <div className="min-h-screen" >
+        <div className="min-h-screen">
           <div className="container mx-auto" >
             <UserIcon name={name} icon={icon} />
             <div className="flex justify-center" >
