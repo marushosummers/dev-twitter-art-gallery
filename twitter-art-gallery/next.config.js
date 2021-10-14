@@ -16,7 +16,7 @@ module.exports = {
         {
           key: 'Cache-Control',
           value:
-            'public, max-age=30, s-maxage=30',
+            'public, no-cache, max-age=0, s-maxage=0',
         },
       ],
      }
