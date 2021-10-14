@@ -70,7 +70,7 @@ const TwitterScreenName: NextPage  = () => {
   if (userData.user.protected) { return <ErrorMessage name={name} message={"非公開ユーザーです"} /> }
 
   if (fav.error && fav.error.status === 404) { return <ErrorMessage name={name} message={"画像が見つかりませんでした"} /> }
-  if (fav.error) { return <ErrorMessage name={name} message={"画像の取得に失敗しました"} /> }
+  if (fav.error) { return <ErrorMessage name={name} message={"API制限中です。しばらく待ってからアクセスしてみてください"} /> }
   if (!fav.data) { return <Loading name={name} /> }
 
   const isLoading = fav.size !== fav.data.length;
