@@ -29,6 +29,7 @@ const ImageBlock: React.FC<ImageBlockimage> = ({ image }) => {
             height={150 * image.height / image.width}
             className="rounded-md"
             onLoadingComplete={() => animationControls.start("visible")}
+            unoptimized={true}
           />
         </div>
       </a>
