@@ -4,35 +4,40 @@ const InfoModal = ({ onClick }) => {
 
   return (
     <div
-      className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-16 z-50 outline-none focus:outline-none"
+      className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-x-8 inset-y-16 z-50 outline-none focus:outline-none"
     >
       <div className="relative w-auto my-6 mx-auto max-w-3xl">
         {/*content*/}
-        <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+        <div className="nm-inset-gray-100 rounded-lg relative flex flex-col w-full outline-none focus:outline-none">
           {/*header*/}
           <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-            <h3 className="text-3xl font-semibold">
+            <span className="text-xl font-semibold">
               Garoo
-            </h3>
-            <button
-              className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-              onClick={onClick}
-            >
-              <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                ×
-              </span>
-            </button>
+            </span>
           </div>
           {/*body*/}
-          <div className="relative p-6 flex-auto">
-            <p className="my-4 text-blueGray-500 text-lg leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-          </div>
+          <div className="relative px-6 py-1 flex-auto">
+            <p className="my-1 text-xs leading-relaxed">
+              Twitterアカウント名を入れると<br />
+              お気に入りしたツイート画像を<br />
+              一覧で閲覧できるサービスです。<br />
+              <br />
+              非公開アカウントは閲覧できません<br />
+              <br />
+              本サービスは<br />
+              Twitter APIを利用しています。<br />
+              <br />
+              お問い合わせは<br />
+              DMにてお願い致します<br />
+              </p>
+            <a href="https://twitter.com/marusho_summers" className="my-1 text-xs leading-relaxed">
+              @marusho_summers
+            </a>
+        </div>
           {/*footer*/}
-          <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+          <div className="flex items-center justify-center px-6 py-5">
             <button
-              className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className="nm-flat-gray-100 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none  rounded-full hover:bg-gray-200 "
               type="button"
               onClick={onClick}
             >
