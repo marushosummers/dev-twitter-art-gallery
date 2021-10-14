@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import TwitterApi, { TweetV1 } from "twitter-api-v2";
 import { FavoriteImage } from '../../../domain/favarite-image';
 import errorHandler from '../../../helpers/api/errorHandler';
+import { HttpError } from '../../../helpers/error';
 
 const token = process.env.APP_USER_TOKEN ?? "";
 
@@ -11,18 +12,20 @@ const client = twitterClient.readOnly;
 const controller = async (request: NextApiRequest, response: NextApiResponse) => {
   const params = { name: request.query.name, max_id: request.query.max_id };
 
-  // TODO: エラーハンドリング
-  console.log(params);
-
+  console.log(params)
   try{
     const favoliteImages = await getFavoliteTweets(params)
     response.json({
-        max_id: getMaxId(favoliteImages),
+        max_id: getMinId(favoliteImages),
         images: favoliteImages,
     })
-  } catch (error) {
+  } catch (error: any) {
     console.log(error)
-    errorHandler(error, response);
+    response.json({
+      max_id: 0,
+      images: [],
+    })
+    //errorHandler(error, response);
   }
 };
 
@@ -37,12 +40,14 @@ const getFavoliteTweets = async (params: { name: string | string[], max_id: stri
 };
 
 const extractImages = (tweets: any): FavoriteImage[] => {
+  if (!tweets) {
+    throw new HttpError({ status: 404, message: "NoteFound" })
+  }
 
   const images: FavoriteImage[] = tweets.map((tweet) => {
     if (tweet.entities.media) {
       if (tweet.entities.media[0].type == "photo") {
         if (!tweet.entities.media[0].media_url_https.includes("video_thumb")) {
-          // console.log(tweet.entities.media[0])
           return new FavoriteImage({
             id: tweet.id,
             url: tweet.entities.media[0].media_url_https,
@@ -54,11 +59,15 @@ const extractImages = (tweets: any): FavoriteImage[] => {
       }
     }
   });
+  const imageList = images.filter(Boolean);
 
-  return images.filter(Boolean);
-};
+  if (!imageList.length) {
+    throw new HttpError({ status: 404, message: "NoteFound" })
+  }
+  return imageList
+  };
 
-const getMaxId = (favolitImages: FavoriteImage[]): number => {
+const getMinId = (favolitImages: FavoriteImage[]): number => {
   const maxImage = favolitImages.reduce((prev, current) => ((prev.id < current.id) ? prev : current));
   return maxImage.id - 1000
 };

@@ -5,12 +5,14 @@ import useSWR from 'swr'
 import useSWRInfinite from 'swr/infinite'
 import InfiniteScroll from 'react-infinite-scroller';
 
+import { HttpError } from '../../helpers/error';
 import ImageView from "../../components/ImageView";
 import Layout from '../../components/layout'
 import Header from "../../components/Header";
 import UserIcon from "../../components/UserIcon";
 import PageTransition from "../../components/PageTransition";
 import Loading from "../../components/Loading";
+import ErrorMessage from '../../components/ErrorMessage';
 
 interface typeUser {
   id: number
@@ -40,7 +42,7 @@ const TwitterScreenName: NextPage  = () => {
 
   const fetcher = async (url) => {
     const res = await fetch(url)
-    if (!res.ok) throw new Error(`${res.status}`);
+    if (res && !res.ok) throw new HttpError({ status: res.status, message: "" });
     return res.json()
   }
   const userPath = (name: string): string => {
@@ -59,41 +61,16 @@ const TwitterScreenName: NextPage  = () => {
     fetcher,
     { shouldRetryOnError: false }
   )
-console.log(userError)
-  // TODO: エラーハンドリングをする
-  if (userError || fav.error) {
-    return (
-    <Layout>
-      <Header name={name} />
-        <div className="flex justify-center">
-          <span className="nm-inset-gray-100 text-gray-500 text-sm mx-auto my-20 p-5 rounded-full">
-            ユーザーが見つかりませんでした
-          </span>
-        </div>
-      </Layout>
-    )
-  }
-  if (!userData || !fav.data) {
-    return (
-      <Layout>
-        <Header name={name} />
-        <Loading key={name}/>
-      </Layout>
-    );
-  }
 
-  if (!userData.user || !fav.data[0].images) {
-    return (
-      <Layout>
-        <Header name={name} />
-        <div className="flex justify-center">
-          <span className="nm-inset-gray-100 text-gray-500 text-sm mx-auto my-20 p-5 rounded-full">
-            画像が見つかりませんでした
-          </span>
-        </div>
-      </Layout>
-    );
-  }
+  if (userError && userError.status === 404) { return <ErrorMessage name={name} message={"ユーザーが見つかりませんでした"} /> }
+  if (userError) { return <ErrorMessage name={name} message={"ユーザー取得に失敗しました"} /> }
+  if (!userData) { return <Loading name={name} /> }
+  if (!userData.user) { return <ErrorMessage name={name} message={"ユーザデータが取得できません"} /> }
+  if (userData.user.protected) { return <ErrorMessage name={name} message={"非公開ユーザーです"} /> }
+
+  if (fav.error && fav.error.status === 404) { return <ErrorMessage name={name} message={"画像が見つかりませんでした"} /> }
+  if (fav.error) { return <ErrorMessage name={name} message={"画像の取得に失敗しました"} /> }
+  if (!fav.data) { return <Loading name={name} /> }
 
   const isLoading = fav.size !== fav.data.length;
   const loadFav = () => {
@@ -105,27 +82,29 @@ console.log(userError)
   const icon = userData.user?.image ?? "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png"
   const images = fav.data.reduce((pre, cur) => pre.concat(cur?.images), []) ?? []
 
+
   return (
-    <InfiniteScroll
-      pageStart={0}
-      loadMore={loadFav}
-      hasMore={true}
-      loader={<div></div>}
-    >
     <Layout>
       <Header name={name} />
       <PageTransition key={name}>
         <div className="min-h-screen">
           <div className="container mx-auto" >
             <UserIcon name={name} icon={icon} />
-            <div className="flex justify-center" >
-              <ImageView screen_name={name} images={images} />
-            </div>
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={loadFav}
+              hasMore={true}
+              loader={<div></div>}
+            >
+              <div className="flex justify-center" >
+                <ImageView screen_name={name} images={images} />
+              </div>
+            </InfiniteScroll>
           </div>
         </div>
       </PageTransition>
       </Layout>
-    </InfiniteScroll>
+
   );
 };
 

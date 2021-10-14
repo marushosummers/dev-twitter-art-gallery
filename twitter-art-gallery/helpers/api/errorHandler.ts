@@ -14,7 +14,7 @@ const errorHandler = (err, res) => {
   }
 
   // default to 500 server error
-  if (err.code === 404) {
+  if (err.code === 404 || err.status === 404) {
     // custom application error
     return res.status(404).json({ message: err.message });
   }

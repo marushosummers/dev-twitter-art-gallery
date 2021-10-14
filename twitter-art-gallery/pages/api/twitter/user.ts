@@ -21,8 +21,6 @@ const controller = async (request: NextApiRequest, response: NextApiResponse) =>
         user: user,
     })
   } catch (error) {
-    console.log("0000000000000000000000")
-    console.log(error)
     errorHandler(error, response);
   }
 };
@@ -39,6 +37,7 @@ const extractUser = (user: any): User => {
     name: user.screen_name,
     image: user.profile_image_url_https,
     favourites_count: user.favourites_count,
+    protected: user.protected,
   }) 
 };
 
