@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 export default function PageTransition({ key, children }) {
   return (
     <motion.div
-      key={key}
       initial="initial"
       animate="animate"
       variants={{

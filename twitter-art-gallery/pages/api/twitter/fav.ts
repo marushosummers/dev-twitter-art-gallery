@@ -35,10 +35,10 @@ const controller = async (request: NextApiRequest, response: NextApiResponse) =>
 
 const getFavoliteTweets = async (params: { name: string | string[], max_id: string | string[] }): Promise<FavoriteImage[]> => {
   if (typeof params.name === "string" && params.max_id) {
-    const likedTweets = await client.v1.get('favorites/list.json', { screen_name: params.name, max_id: params.max_id, count: 100 });
+    const likedTweets = await client.v1.get('favorites/list.json', { screen_name: params.name, max_id: params.max_id, count: 190 });
     return extractImages(likedTweets)
   } else if (typeof params.name === "string") {
-    const likedTweets = await client.v1.get('favorites/list.json', { screen_name: params.name, count: 100 });
+    const likedTweets = await client.v1.get('favorites/list.json', { screen_name: params.name, count: 190 });
     return extractImages(likedTweets)
   }
 };
