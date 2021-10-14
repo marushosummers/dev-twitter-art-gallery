@@ -13,6 +13,7 @@ import UserIcon from "../../components/UserIcon";
 import PageTransition from "../../components/PageTransition";
 import Loading from "../../components/Loading";
 import ErrorMessage from '../../components/ErrorMessage';
+import LoadingItem from '../../components/LoadingItem';
 
 interface typeUser {
   id: number
@@ -94,7 +95,6 @@ const TwitterScreenName: NextPage  = () => {
               pageStart={0}
               loadMore={loadFav}
               hasMore={true}
-              loader={<div></div>}
             >
               <div className="flex justify-center" >
                 <ImageView screen_name={name} images={images} />

@@ -21,6 +21,10 @@ const controller = async (request: NextApiRequest, response: NextApiResponse) =>
     })
   } catch (error: any) {
     console.log(error)
+    if (error.code === 429 || error.status === 429) {
+      // custom application error
+      return error.status(404).json({ message: error.message });
+    }
     response.json({
       max_id: 0,
       images: [],
