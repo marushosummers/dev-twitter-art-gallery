@@ -3,11 +3,11 @@ import Image from 'next/image'
 import { ImageItem } from "./ImageView"
 import { motion, useAnimation } from "framer-motion";
 
-interface ImageBlockimage {
+interface ImageBlockProps {
   image: ImageItem;
 }
 
-const ImageBlock: React.FC<ImageBlockimage> = ({ image }) => {
+const ImageBlock: React.FC<ImageBlockProps> = ({ image }) => {
   const animationVariants = {
     visible: { opacity: 1 },
     hidden: { opacity: 0 },
